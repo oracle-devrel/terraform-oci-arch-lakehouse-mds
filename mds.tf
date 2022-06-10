@@ -3,7 +3,7 @@
 
 module "mds-instance" {
     source = "github.com/oracle-devrel/terraform-oci-cloudbricks-mysql-database?ref=v1.0.4.1"
-    providers                                       = { oci = oci.targetregion }
+    #providers                                       = { oci = oci.targetregion }
     tenancy_ocid                                    = var.tenancy_ocid
     region                                          = var.region
     mysql_instance_compartment_ocid                 = var.compartment_ocid
