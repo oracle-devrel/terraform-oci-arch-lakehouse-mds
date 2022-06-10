@@ -1,8 +1,8 @@
 ## Copyright (c) 2022, Oracle and/or its affiliates. 
 ## All rights reserved. The Universal Permissive License (UPL), Version 1.0 as shown at http://oss.oracle.com/licenses/upl
 
-title: "Deploy Drupal on OCI with MDS"
-stackDescription: "Deploy Drupal on OCI with MySQL Database Service (including multinode scenario)"
+title: "Deploy a Data Lakehouse with MDS on OCI"
+stackDescription: "Deploy a Data Lakehouse on OCI with MySQL Database Service (including multinode scenario)"
 schemaVersion: 1.2.0
 version: "20201104"
 locale: "en"
@@ -32,7 +32,7 @@ variableGroups:
       - availability_domain_name
       - admin_password
       - numberOfNodes
-      - drupal_password
+      - db_password
       - show_advanced
 
   - title: Network Optional Configuration
@@ -81,14 +81,14 @@ variableGroups:
       - node_flex_shape_ocpus
       - node_flex_shape_memory  
 
-  - title: Drupal Optional Configuration
+  - title: Object Storage Optional Configuration
     visible: 
         and:
           - show_advanced
     variables:
-      - drupal_instance_name
-      - drupal_name
-      - drupal_schema
+      - data_lake_bucket_name
+      - data_lake_bucket_access_type
+      - data_lake_bucket_name_storage_tier
 
   - title: MDS Optional Configuration
     visible: 
@@ -392,11 +392,11 @@ variables:
     type: boolean
     default: false
 
-  drupal_password:
+  db_password:
     type: password
     required: true
-    title: MySQL Drupal User's Password
-    description: MySQL Password for Drupal User
+    title: MySQL User Password
+    description: MySQL User Password
     pattern: "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+\\-=\\[\\]{};':\\\"\\\\|,.<>\\/?]).{8,32}$"
 
   mds_instance_name:
@@ -404,25 +404,20 @@ variables:
     required: true
     title: MDS Instance's name
 
-  drupal_instance_name:
+  data_lake_bucket_name:
     type: string
     required: true
-    title: Drupal Compute Instance's name
+    title: Data Lake bucket name
 
-  drupal_name:
+  data_lake_bucket_access_type:
     type: string
     required: true
-    title: MySQL Drupal Username
-    description: MySQL Username for Drupal
-    minLength: 2
-    maxLength: 14
-    pattern: "^[a-zA-Z][a-zA-Z0-9]+$"
+    title: Data Lake bucket Access Type
 
-  drupal_schema:
+  data_lake_bucket_storage_tier:
     type: string
     required: true
-    title: MySQL Drupal Schema
-    description: MySQL Schema/Database for Drupal
+    title: Data Lake bucket Storage Tier
 
   use_shared_storage:
     type: boolean
