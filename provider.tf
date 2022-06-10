@@ -10,7 +10,7 @@ terraform {
 }
 
 provider "oci" {
-  alias            = "targetregion"
+  #alias            = "targetregion"
   tenancy_ocid     = var.tenancy_ocid
   region           = var.region
   user_ocid        = var.user_ocid

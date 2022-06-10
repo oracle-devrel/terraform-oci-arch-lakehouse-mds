@@ -3,7 +3,7 @@
 
 module "oss-data-analytics" {
   source                    = "./modules/oss-data-analytics"
-  providers                 = { oci = oci.targetregion }
+  #providers                 = { oci = oci.targetregion }
   tenancy_ocid              = var.tenancy_ocid
   vcn_id                    = oci_core_virtual_network.lakehouse_mds_vcn.id
   numberOfNodes             = var.numberOfNodes

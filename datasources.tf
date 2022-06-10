@@ -43,7 +43,7 @@ data "oci_identity_region_subscriptions" "home_region_subscriptions" {
 }
 
 data "oci_identity_availability_domains" "ADs" {
-  provider       = oci.targetregion
+  #provider       = oci.targetregion
   compartment_id = var.tenancy_ocid
 }
 

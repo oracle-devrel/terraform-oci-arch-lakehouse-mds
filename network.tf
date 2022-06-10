@@ -2,7 +2,7 @@
 ## All rights reserved. The Universal Permissive License (UPL), Version 1.0 as shown at http://oss.oracle.com/licenses/upl
 
 resource "oci_core_virtual_network" "lakehouse_mds_vcn" {
-  provider       = oci.targetregion
+  #provider       = oci.targetregion
   cidr_block     = var.vcn_cidr
   compartment_id = var.compartment_ocid
   display_name   = var.vcn
@@ -12,7 +12,7 @@ resource "oci_core_virtual_network" "lakehouse_mds_vcn" {
 
 
 resource "oci_core_internet_gateway" "internet_gateway" {
-  provider       = oci.targetregion
+  #provider       = oci.targetregion
   compartment_id = var.compartment_ocid
   display_name   = "internet_gateway"
   vcn_id         = oci_core_virtual_network.lakehouse_mds_vcn.id
@@ -21,7 +21,7 @@ resource "oci_core_internet_gateway" "internet_gateway" {
 
 
 resource "oci_core_nat_gateway" "nat_gateway" {
-  provider       = oci.targetregion 
+  #provider       = oci.targetregion 
   compartment_id = var.compartment_ocid
   vcn_id         = oci_core_virtual_network.lakehouse_mds_vcn.id
   display_name   = "nat_gateway"
@@ -30,7 +30,7 @@ resource "oci_core_nat_gateway" "nat_gateway" {
 
 
 resource "oci_core_route_table" "public_route_table" {
-  provider       = oci.targetregion
+  #provider       = oci.targetregion
   compartment_id = var.compartment_ocid
   vcn_id         = oci_core_virtual_network.lakehouse_mds_vcn.id
   display_name   = "RouteTableViaIGW"
@@ -43,7 +43,7 @@ resource "oci_core_route_table" "public_route_table" {
 }
 
 resource "oci_core_route_table" "private_route_table" {
-  provider       = oci.targetregion
+  #provider       = oci.targetregion
   compartment_id = var.compartment_ocid
   vcn_id         = oci_core_virtual_network.lakehouse_mds_vcn.id
   display_name   = "RouteTableViaNATGW"
@@ -56,7 +56,7 @@ resource "oci_core_route_table" "private_route_table" {
 }
 
 resource "oci_core_security_list" "public_security_list_ssh" {
-  provider       = oci.targetregion
+  #provider       = oci.targetregion
   compartment_id = var.compartment_ocid
   display_name   = "Allow Public SSH Connections"
   vcn_id         = oci_core_virtual_network.lakehouse_mds_vcn.id
@@ -76,7 +76,7 @@ resource "oci_core_security_list" "public_security_list_ssh" {
 }
 
 resource "oci_core_security_list" "public_security_list_http" {
-  provider       = oci.targetregion
+  #provider       = oci.targetregion
   compartment_id = var.compartment_ocid
   display_name   = "Allow Zeppelin HTTP(S) and Grafana"
   vcn_id         = oci_core_virtual_network.lakehouse_mds_vcn.id
@@ -112,7 +112,7 @@ resource "oci_core_security_list" "public_security_list_http" {
 }
 
 resource "oci_core_security_list" "private_security_list" {
-  provider       = oci.targetregion
+  #provider       = oci.targetregion
   compartment_id = var.compartment_ocid
   display_name   = "Private"
   vcn_id         = oci_core_virtual_network.lakehouse_mds_vcn.id
@@ -186,7 +186,7 @@ resource "oci_core_security_list" "private_security_list" {
 }
 
 resource "oci_core_subnet" "analytics_subnet" {
-  provider                   = oci.targetregion
+  #provider                   = oci.targetregion
   cidr_block                 = cidrsubnet(var.vcn_cidr, 8, 2)
   display_name               = "analytics_subnet"
   compartment_id             = var.compartment_ocid
@@ -200,7 +200,7 @@ resource "oci_core_subnet" "analytics_subnet" {
 }
 
 resource "oci_core_subnet" "lb_subnet_public" {
-  provider          = oci.targetregion
+  #provider          = oci.targetregion
   count             = var.numberOfNodes > 1 ? 1 : 0
   cidr_block        = cidrsubnet(var.vcn_cidr, 8, 0)
   display_name      = "lb_public_subnet"
@@ -214,7 +214,7 @@ resource "oci_core_subnet" "lb_subnet_public" {
 }
 
 resource "oci_core_subnet" "bastion_subnet_public" {
-  provider          = oci.targetregion
+  #provider          = oci.targetregion
   count             = (var.numberOfNodes > 1 && var.use_bastion_service == false) ? 1 : 0
   cidr_block        = cidrsubnet(var.vcn_cidr, 8, 1)
   display_name      = "bastion_public_subnet"
@@ -228,7 +228,7 @@ resource "oci_core_subnet" "bastion_subnet_public" {
 }
 
 resource "oci_core_subnet" "fss_subnet_private" {
-  provider                   = oci.targetregion
+  #provider                   = oci.targetregion
   count                      = var.numberOfNodes > 1 && var.use_shared_storage ? 1 : 0
   cidr_block                 = cidrsubnet(var.vcn_cidr, 8, 4)
   display_name               = "fss_private_subnet"
@@ -242,7 +242,7 @@ resource "oci_core_subnet" "fss_subnet_private" {
 }
 
 resource "oci_core_subnet" "mds_subnet_private" {
-  provider                   = oci.targetregion
+  #provider                   = oci.targetregion
   cidr_block                 = cidrsubnet(var.vcn_cidr, 8, 3)
   display_name               = "mds_private_subnet"
   compartment_id             = var.compartment_ocid
