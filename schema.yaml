@@ -162,7 +162,7 @@ variables:
     multipleOf: 1
     default: 6
     title: "Flex Shape Memory (GB)"
-    description: "Choose number GB for Flex Shape Memory."
+    description: "Choose number of GB for Flex Shape Memory."
     visible:
       and:
         - or:
@@ -356,6 +356,7 @@ variables:
         - gt:
           - numberOfNodes
           - 1
+  
   vcn:
     type: string
     visible: false
@@ -408,7 +409,7 @@ variables:
   mds_instance_name:
     type: string
     required: true
-    title: MDS Instance's name
+    title: MDS Instance name
 
   mysql_heatwave_enabled:
     type: boolean
@@ -483,9 +484,9 @@ variables:
       - "MySQL.HeatWave.VM.Standard.E3" 
     visible: 
         and:
+          - show_advanced
           not:
             - mysql_heatwave_enabled
-          - show_advanced
 
   mysql_db_system_display_name:
     type: string
