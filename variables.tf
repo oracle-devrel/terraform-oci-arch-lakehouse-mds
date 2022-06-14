@@ -180,8 +180,8 @@ variable "vm_instance_name" {
 }
 
 variable "numberOfNodes" {
-    description = "Amount of Webservers to deploy"
-    default = 2
+    description = "Amount of compute instances to deploy"
+    default = 1
 }
 
 variable "use_shared_storage" {
