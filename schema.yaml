@@ -383,7 +383,7 @@ variables:
     type: string
     required: true
     title: MDS Admin Username
-    description: MySQL Database Service's admin username
+    description: MySQL Database Service admin username
     minLength: 1
     maxLength: 14
     pattern: "^[a-zA-Z][a-zA-Z0-9]+$"
@@ -391,8 +391,8 @@ variables:
   admin_password:
     type: password
     required: true
-    title: MDS Admin User's Password
-    description: Password for MySQL Database Service's admin user
+    title: MDS Admin User Password
+    description: Password for MySQL Database Service admin user
     pattern: "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+\\-=\\[\\]{};':\\\"\\\\|,.<>\\/?]).{8,32}$"
 
   mysql_is_highly_available:

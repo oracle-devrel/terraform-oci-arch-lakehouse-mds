@@ -174,14 +174,29 @@ variable "mysql_db_system_maintenance_window_start_time" {
   default = "SUNDAY 14:30"
 }
 
+variable "mysql_heatwave_shape" {
+  description = "The shape to be used instead of mysql_shape_name when mysql_heatwave_enabled = true."
+  default     = "MySQL.HeatWave.VM.Standard.E3"
+}
+
+variable "mysql_heatwave_enabled" {
+  description = "Defines whether a MySQL HeatWave cluster is enabled"
+  default     = true
+}
+
+variable "mysql_heatwave_cluster_size" {
+  description = "Number of MySQL HeatWave nodes to be created"
+  default     = 2
+}
+
 variable "vm_instance_name" {
   description = "Name of the compute instance"
   default     = "lakehouse-instance"
 }
 
 variable "numberOfNodes" {
-    description = "Amount of Webservers to deploy"
-    default = 2
+    description = "Amount of compute instances to deploy"
+    default = 1
 }
 
 variable "use_shared_storage" {
