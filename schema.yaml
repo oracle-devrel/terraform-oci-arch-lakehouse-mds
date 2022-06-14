@@ -485,7 +485,7 @@ variables:
     visible: 
         and:
           - show_advanced
-          not:
+          - not:
             - mysql_heatwave_enabled
 
   mysql_db_system_display_name:
