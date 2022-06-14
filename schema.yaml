@@ -37,6 +37,7 @@ variableGroups:
       - numberOfNodes
       - db_password
       - show_advanced
+      - mysql_heatwave_enabled
 
   - title: Network Optional Configuration
     visible: 
@@ -103,6 +104,8 @@ variableGroups:
       - mds_instance_name
       - mysql_db_system_data_storage_size_in_gb
       - mysql_is_highly_available
+      - mysql_heatwave_shape
+      - mysql_heatwave_cluster_size
 
 variables:
 
@@ -407,6 +410,29 @@ variables:
     required: true
     title: MDS Instance's name
 
+  mysql_heatwave_enabled:
+    type: boolean
+    title: "Enable MySQL HeatWave"
+    description: "Defines whether a MySQL HeatWave cluster is enabled"
+  
+  mysql_heatwave_shape:
+    type: string
+    title: "MySQL HeatWave Shape"
+    description: "The shape to be used instead of mysql_shape when mysql_heatwave_enabled = true."
+    visible:
+        and:
+          - mysql_heatwave_enabled
+          - show_advanced
+
+  mysql_heatwave_cluster_size:
+    type: string
+    title: "MySQL HeatWave Cluster Size"
+    description: "Number of MySQL HeatWave nodes to be created."
+    visible:
+        and:
+          - mysql_heatwave_enabled
+          - show_advanced
+
   data_lake_bucket_name:
     type: string
     required: true
@@ -455,6 +481,11 @@ variables:
       - "MySQL.VM.Standard.E3.48.768GB"    
       - "MySQL.VM.Standard.E3.64.1024GB"  
       - "MySQL.HeatWave.VM.Standard.E3" 
+    visible: 
+        and:
+          not:
+            - mysql_heatwave_enabled
+          - show_advanced
 
   mysql_db_system_display_name:
     type: string

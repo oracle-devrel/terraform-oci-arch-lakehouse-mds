@@ -21,4 +21,7 @@ module "mds-instance" {
     mysql_db_system_hostname_label                  = var.mysql_db_system_hostname_label
     mysql_db_system_is_highly_available             = var.mysql_is_highly_available
     mysql_db_system_maintenance_window_start_time   = var.mysql_db_system_maintenance_window_start_time
+    mysql_heatwave_enabled                          = var.mysql_heatwave_enabled
+    mysql_shape_name                                = var.mysql_heatwave_enabled ? var.mysql_heatwave_shape : var.mysql_shape
+    mysql_heatwave_cluster_size                     = var.mysql_heatwave_cluster_size
 }

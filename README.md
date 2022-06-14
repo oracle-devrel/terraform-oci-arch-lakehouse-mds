@@ -2,7 +2,7 @@
 
 ## Reference Architecture
 
-This Terraform code spins up one or more Oracle Cloud Infrastructure (OCI) instances after creating the required OCI networking components and a shared file system (when 2 or more instances are used), deploys Zeppelin and Grafana on the instance(s), creates a Load Balancer, a MySQL Database System (with High Availability if desired), an Object Storage bucket and a Data Integration workspace.
+This Terraform code spins up one or more Oracle Cloud Infrastructure (OCI) instances, a shared file system and a load balancer when 2 or more instances are used, creates the required OCI networking components, deploys Zeppelin and Grafana on the instance(s), deploys MySQL HeatWave, an Object Storage bucket and a Data Integration workspace.
 
 ## Architecture Diagram 
 
@@ -94,10 +94,7 @@ grafana_home_URL = http://203.0.113.1:3000/
 This project is open source.  Please submit your contributions by forking this repository and submitting a pull request!  Oracle appreciates any contributions that are made by the open source community.
 
 ## Attribution & Credits
-This repository was initially inspired on the materials found in [lefred's blog](https://lefred.be/content/apache-zeppelin-on-oci-with-mds/). One of the enhancements done to the materials in question was the adoption of the [OCI Cloudbricks MySQL module](https://github.com/oracle-devrel/terraform-oci-cloudbricks-mysql-database).
-That being the case, we would sincerely like to thank:
-- Frédéric Descamps (https://github.com/lefred)
-- Denny Alquinta (https://github.com/dralquinta)
+This repository was initially inspired on the materials found in [lefred's blog](https://lefred.be/content/apache-zeppelin-on-oci-with-mds/). For that reason we would sincerely like to thank Frédéric Descamps (https://github.com/lefred). We would also like to thank Luke Feldman (https://github.com/lfeldman) for all his help and dedication.
 
 ## License
 Copyright (c) 2022 Oracle and/or its affiliates.
