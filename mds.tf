@@ -12,7 +12,6 @@ module "mds-instance" {
     mysql_db_system_admin_username                  = var.admin_username
     mysql_db_system_admin_password                  = var.admin_password
     mysql_db_system_availability_domain             = var.availability_domain_name == "" ? lookup(data.oci_identity_availability_domains.ADs.availability_domains[0], "name") : var.availability_domain_name
-    mysql_shape_name                                = var.mysql_shape
     mysql_db_system_data_storage_size_in_gb         = var.mysql_db_system_data_storage_size_in_gb
     mysql_db_system_defined_tags                    = {"${oci_identity_tag_namespace.ArchitectureCenterTagNamespace.name}.${oci_identity_tag.ArchitectureCenterTag.name}" = var.release }
     mysql_db_system_description                     = var.mysql_db_system_description
