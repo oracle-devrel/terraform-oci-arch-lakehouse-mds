@@ -6,7 +6,7 @@ resource "oci_identity_dynamic_group" "data_integration_dynamic_group" {
   compartment_id = var.tenancy_ocid
   description    = "Data Integration dynamic group"
   matching_rule  = "resource.compartment.id = '${var.compartment_ocid}'"
-  name           = "data-integration-dynamic-group"
+  name           = "data-integration-dynamic-group-${random_id.tag.hex}"
 }
 
 resource "oci_identity_policy" "DataIntegrationPolicy" {

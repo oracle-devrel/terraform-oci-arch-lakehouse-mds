@@ -74,12 +74,12 @@ if [[ $use_shared_storage == "true" ]]; then
   sed -i 's/\;plugins = \/var\/lib\/grafana\/plugins/plugins = \${shared_working_dir}\/grafana\/plugins/g' /etc/grafana/grafana.ini
 fi
 
-sudo systemctl daemon-reload
-sudo systemctl start grafana-server
-sudo systemctl status grafana-server --no-pager
+systemctl daemon-reload
+systemctl start grafana-server
+systemctl status grafana-server --no-pager
 
 # Configure the Grafana server to start at boot
-sudo systemctl enable grafana-server
+systemctl enable grafana-server
 
 echo "Grafana installed and started !"
 

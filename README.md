@@ -10,9 +10,9 @@ This Terraform code spins up one or more Oracle Cloud Infrastructure (OCI) insta
 
 ## Prerequisites
 
-- Permission to `manage` the following types of resources in your Oracle Cloud Infrastructure tenancy: `vcns`, `internet-gateways`, `route-tables`, `security-lists`, `subnets`, `mysql-family`, and `instances`.
+- Permission to `manage` the following types of resources in your Oracle Cloud Infrastructure tenancy: `vcns`, `internet-gateways`, `route-tables`, `security-lists`, `subnets`, `mysql-family`, `buckets` and `instances`.
 
-- Quota to create the following resources: 1 VCN, 2 subnets, 1 Internet Gateway, 1 NAT Gateway, 2 route rules, 1 MySQL Database System (MDS) instance, and 1 (or more) compute instance(s) for Analytics.
+- Quota to create the following resources: 1 VCN, 2 subnets, 1 Internet Gateway, 1 NAT Gateway, 2 route rules, 1 MySQL Database System (MDS) instance, 1 Object Storage bucket and 1 (or more) compute instance(s) for Analytics.
 
 If you don't have the required permissions and quota, contact your tenancy administrator. See [Policy Reference](https://docs.cloud.oracle.com/en-us/iaas/Content/Identity/Reference/policyreference.htm), [Service Limits](https://docs.cloud.oracle.com/en-us/iaas/Content/General/Concepts/servicelimits.htm), [Compartment Quotas](https://docs.cloud.oracle.com/iaas/Content/General/Concepts/resourcequotas.htm).
 
@@ -64,9 +64,9 @@ private_key_path    = "<pem_private_key_path>"
 region              = "<oci_region>"
 compartment_ocid    = "<compartment_ocid>"
 
-# MySQL and Drupal variables
+# MySQL and Compute variables
 admin_password      = "<MySQL_admin_password>"
-drupal_password     = "<Drupal_user_password>"
+db_password         = "<db_user_password>"
 numberOfNodes       = 1 # value 2+ for multinode scenario will be deployed inluding LB & FSS.
 ````
 
@@ -86,14 +86,15 @@ When you no longer need the deployment, you can run this command to destroy the 
 After the deployment is finished, you can access Zeppelin and Grafana from the URLs found in the Terraform output.
 
 ````
-drupal_home_URL = http://193.122.198.20/
+zeppelin_home_URL = http://203.0.113.1/
+grafana_home_URL = http://203.0.113.1:3000/
 `````
 
 ## Contributing
 This project is open source.  Please submit your contributions by forking this repository and submitting a pull request!  Oracle appreciates any contributions that are made by the open source community.
 
 ## Attribution & Credits
-This repository was initially inspired on the materials found in [lefred's blog](https://lefred.be/content/deploying-drupal-in-oci-using-mds-the-easy-way/). One of the enhancements done to the materials in question was the adoption of the [OCI Cloudbricks MySQL module](https://github.com/oracle-devrel/terraform-oci-cloudbricks-mysql-database).
+This repository was initially inspired on the materials found in [lefred's blog](https://lefred.be/content/apache-zeppelin-on-oci-with-mds/). One of the enhancements done to the materials in question was the adoption of the [OCI Cloudbricks MySQL module](https://github.com/oracle-devrel/terraform-oci-cloudbricks-mysql-database).
 That being the case, we would sincerely like to thank:
 - Frédéric Descamps (https://github.com/lefred)
 - Denny Alquinta (https://github.com/dralquinta)

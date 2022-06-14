@@ -20,6 +20,7 @@ output "db_user_name" {
 
 output "db_password" {
   value = var.db_password
+  sensitive = true
 }
 
 output "mds_instance_ip" {

@@ -6,9 +6,9 @@ firewall-cmd --zone=public --permanent --add-port=443/tcp
 firewall-cmd --zone=public --permanent --add-port=3000/tcp
 firewall-cmd --reload
 
-chcon --type httpd_sys_rw_content_t /var/www/html
-chcon --type httpd_sys_rw_content_t /var/www/html/sites/*
-chcon --type httpd_sys_rw_content_t /var/www/html/*
-setsebool -P httpd_can_network_connect_db 1
+if [[ $use_shared_storage == "true" ]]; then
+  setenforce 0 # disabling SELinux (otherwise zeppelin service will not start).
+  sed -i.bak 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/selinux/config # SELinux disabled.
+fi
 
 echo "Local Security Granted !"
