@@ -35,6 +35,7 @@ variableGroups:
       - availability_domain_name
       - admin_password
       - numberOfNodes
+      - db_user_name
       - db_password
       - show_advanced
       - mysql_heatwave_enabled
@@ -84,6 +85,7 @@ variableGroups:
       - linux_os_version
       - node_flex_shape_ocpus
       - node_flex_shape_memory  
+      - vm_instance_name
 
   - title: Object Storage Optional Configuration
     visible: 
@@ -92,7 +94,7 @@ variableGroups:
     variables:
       - data_lake_bucket_name
       - data_lake_bucket_access_type
-      - data_lake_bucket_name_storage_tier
+      - data_lake_bucket_storage_tier
 
   - title: MDS Optional Configuration
     visible: 
@@ -144,7 +146,6 @@ variables:
     minimum: 1
     maximum: 128
     multipleOf: 1
-    default: 2
     title: "How many nodes?"
     description: "Choose number of instances to be deployed (more then one will create LoadBalancer)."
 
@@ -398,6 +399,11 @@ variables:
     title: "Deploy High Availability for MDS"
     type: boolean
     default: false
+  
+  db_user_name:
+    type: string
+    required: true
+    title: MySQL Database User Name
 
   db_password:
     type: password
@@ -436,17 +442,17 @@ variables:
 
   data_lake_bucket_name:
     type: string
-    required: true
+    required: false
     title: Data Lake bucket name
 
   data_lake_bucket_access_type:
     type: string
-    required: true
+    required: falsee
     title: Data Lake bucket Access Type
 
   data_lake_bucket_storage_tier:
     type: string
-    required: true
+    required: falsee
     title: Data Lake bucket Storage Tier
 
   use_shared_storage:
@@ -522,3 +528,9 @@ variables:
     default: "Oracle Linux"
     enum:
       - "Oracle Linux"
+
+  vm_instance_name:
+    title: VM instance(s) name
+    description: "A suffix is appended to the name in case of multiple instances"
+    type: string
+    required: false
