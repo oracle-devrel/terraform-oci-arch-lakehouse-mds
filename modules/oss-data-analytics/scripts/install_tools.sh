@@ -69,6 +69,7 @@ sudo yum install -y grafana
 if [[ $use_shared_storage == "true" ]]; then
   cd ${shared_working_dir}
   mkdir grafana grafana/plugins
+  chown -R grafana:grafana grafana
   sed -i 's/\;data = \/var\/lib\/grafana/data = \${shared_working_dir}\/grafana/g' /etc/grafana/grafana.ini
   #sed -i 's/\;logs = \/var\/log\/grafana/logs = \${shared_working_dir}\/grafana\/log/g' grafana.ini
   sed -i 's/\;plugins = \/var\/lib\/grafana\/plugins/plugins = \${shared_working_dir}\/grafana\/plugins/g' /etc/grafana/grafana.ini

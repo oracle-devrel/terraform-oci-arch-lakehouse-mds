@@ -19,6 +19,10 @@ data "oci_identity_availability_domains" "ADs" {
 
 data "template_file" "configure_local_security" {
   template = file("${path.module}/scripts/configure_local_security.sh")
+
+  vars = {
+  use_shared_storage = var.numberOfNodes > 1 ? tostring(true) : tostring(false)
+  }
 }
 
 data "template_file" "install_mysql_shell" {
