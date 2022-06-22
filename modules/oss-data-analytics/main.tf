@@ -901,9 +901,9 @@ resource "oci_load_balancer" "lb01" {
   defined_tags = var.defined_tags
 }
 
-resource "oci_load_balancer_backend_set" "lb_bes_analytics" {
+resource "oci_load_balancer_backend_set" "lb_bes_zeppelin" {
   count            = var.numberOfNodes > 1 ? 1 : 0
-  name             = "analyticsLBBackendSet"
+  name             = "zeppelinLBBackendSet"
   load_balancer_id = oci_load_balancer.lb01[count.index].id
   policy           = "ROUND_ROBIN"
 
@@ -919,20 +919,20 @@ resource "oci_load_balancer_backend_set" "lb_bes_analytics" {
   }
 }
 
-resource "oci_load_balancer_listener" "lb_listener_analytics" {
+resource "oci_load_balancer_listener" "lb_listener_zeppelin" {
   count                    = var.numberOfNodes > 1 ? 1 : 0
   load_balancer_id         = oci_load_balancer.lb01[count.index].id
-  name                     = "http"
-  default_backend_set_name = oci_load_balancer_backend_set.lb_bes_analytics[count.index].name
+  name                     = "zeppelin"
+  default_backend_set_name = oci_load_balancer_backend_set.lb_bes_zeppelin[count.index].name
   port                     = 80
   protocol                 = "HTTP"
 
 }
 
-resource "oci_load_balancer_backend" "lb_be_analytics1" {
+resource "oci_load_balancer_backend" "lb_be_zeppelin1" {
   count            = var.numberOfNodes > 1 ? 1 : 0
   load_balancer_id = oci_load_balancer.lb01[0].id
-  backendset_name  = oci_load_balancer_backend_set.lb_bes_analytics[0].name
+  backendset_name  = oci_load_balancer_backend_set.lb_bes_zeppelin[0].name
   ip_address       = oci_core_instance.analytics.private_ip
   port             = 80
   backup           = false
@@ -941,12 +941,64 @@ resource "oci_load_balancer_backend" "lb_be_analytics1" {
   weight           = 1
 }
 
-resource "oci_load_balancer_backend" "lb_be_analytics2plus" {
+resource "oci_load_balancer_backend" "lb_be_zeppelin2plus" {
   count            = var.numberOfNodes > 1 ? var.numberOfNodes - 1 : 0
   load_balancer_id = oci_load_balancer.lb01[0].id
-  backendset_name  = oci_load_balancer_backend_set.lb_bes_analytics[0].name
+  backendset_name  = oci_load_balancer_backend_set.lb_bes_zeppelin[0].name
   ip_address       = oci_core_instance.analytics_from_image[count.index].private_ip
   port             = 80
+  backup           = false
+  drain            = false
+  offline          = false
+  weight           = 1
+}
+
+resource "oci_load_balancer_backend_set" "lb_bes_grafana" {
+  count            = var.numberOfNodes > 1 ? 1 : 0
+  name             = "grafanaLBBackendSet"
+  load_balancer_id = oci_load_balancer.lb01[count.index].id
+  policy           = "ROUND_ROBIN"
+
+  health_checker {
+    port                = "3000"
+    protocol            = "HTTP"
+    response_body_regex = ".*"
+    url_path            = "/api/health"
+    interval_ms         = "10000"
+    return_code         = "200"
+    timeout_in_millis   = "3000"
+    retries             = "3"
+  }
+}
+
+resource "oci_load_balancer_listener" "lb_listener_grafana" {
+  count                    = var.numberOfNodes > 1 ? 1 : 0
+  load_balancer_id         = oci_load_balancer.lb01[count.index].id
+  name                     = "grafana"
+  default_backend_set_name = oci_load_balancer_backend_set.lb_bes_grafana[count.index].name
+  port                     = 3000
+  protocol                 = "HTTP"
+
+}
+
+resource "oci_load_balancer_backend" "lb_be_grafana1" {
+  count            = var.numberOfNodes > 1 ? 1 : 0
+  load_balancer_id = oci_load_balancer.lb01[0].id
+  backendset_name  = oci_load_balancer_backend_set.lb_bes_grafana[0].name
+  ip_address       = oci_core_instance.analytics.private_ip
+  port             = 3000
+  backup           = false
+  drain            = false
+  offline          = false
+  weight           = 1
+}
+
+resource "oci_load_balancer_backend" "lb_be_grafana2plus" {
+  count            = var.numberOfNodes > 1 ? var.numberOfNodes - 1 : 0
+  load_balancer_id = oci_load_balancer.lb01[0].id
+  backendset_name  = oci_load_balancer_backend_set.lb_bes_grafana[0].name
+  ip_address       = oci_core_instance.analytics_from_image[count.index].private_ip
+  port             = 3000
   backup           = false
   drain            = false
   offline          = false
