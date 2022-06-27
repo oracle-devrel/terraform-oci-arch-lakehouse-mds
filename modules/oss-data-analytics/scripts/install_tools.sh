@@ -46,6 +46,11 @@ cp /usr/share/java/mysql-connector-java.jar interpreter/mysql
 
 ./bin/zeppelin-systemd-service.sh enable
 mv /etc/systemd/system/zeppelin.systemd /etc/systemd/system/zeppelin.service
+
+if [[ $use_shared_storage == "true" ]]; then
+  sed -i 's/syslog.target${shared_working_dir}.mount syslog.target/g' /etc/systemd/system/zeppelin.service
+fi 
+
 /usr/bin/systemctl daemon-reload
 
 systemctl start zeppelin
@@ -73,6 +78,7 @@ if [[ $use_shared_storage == "true" ]]; then
   sed -i 's/\;data = \/var\/lib\/grafana/data = \${shared_working_dir}\/grafana/g' /etc/grafana/grafana.ini
   #sed -i 's/\;logs = \/var\/log\/grafana/logs = \${shared_working_dir}\/grafana\/log/g' grafana.ini
   sed -i 's/\;plugins = \/var\/lib\/grafana\/plugins/plugins = \${shared_working_dir}\/grafana\/plugins/g' /etc/grafana/grafana.ini
+  sed -i 's/postgresql.service${shared_working_dir}.mount postgresql.service/g' /usr/lib/systemd/system/grafana-server.service
 fi
 
 systemctl daemon-reload
