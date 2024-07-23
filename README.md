@@ -97,7 +97,7 @@ This project is open source.  Please submit your contributions by forking this r
 This repository was initially inspired on the materials found in [lefred's blog](https://lefred.be/content/apache-zeppelin-on-oci-with-mds/). For that reason we would sincerely like to thank Frédéric Descamps (https://github.com/lefred). We would also like to thank Luke Feldman (https://github.com/lfeldman) for all his help and dedication.
 
 ## License
-Copyright (c) 2022 Oracle and/or its affiliates.
+Copyright (c) 2024 Oracle and/or its affiliates.
 
 Licensed under the Universal Permissive License (UPL), Version 1.0.
 
